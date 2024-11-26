@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site de filmes</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        /* Estilo para o botão Voltar */
+        .btn-voltar {
+            background-color: #2196F3;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-left: 200px;
+        }
+        .btn-voltar:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" style="font-size: 2em; font-weight: bolder; color: #fff; text-decoration: none;">Meu Site</a>
+            <nav>
+                <ul>
+                    <li><a href="#">Página Inicial</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Botão de voltar -->
+    <button class="btn-voltar" onclick="window.history.back();">Voltar</button>
+
+    <div class="container-formulario">
+        <div class="form-box">
+            <h2 class="title">Adicionar filme:</h2>
+            <form id="formularioFilme">
+                <input type="text" id="filme-nome" placeholder="Nome">
+                <input type="text" id="filme-genero" placeholder="Classificação indicativa">
+                <input type="text" id="filme-data" placeholder="Data de lançamento">
+                <textarea id="filme-descricao" placeholder="Descrição do filme"></textarea>  <!-- Novo campo -->
+                <button type="submit" id="btnAddFilme">Enviar filme</button>
+            </form>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const formularioFilme = document.getElementById('formularioFilme');
+
+    formularioFilme.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const nome = document.getElementById('filme-nome').value;
+        const genero = document.getElementById('filme-genero').value;
+        const data = document.getElementById('filme-data').value;
+        const descricao = document.getElementById('filme-descricao').value;  // Novo campo
+
+        const uuid = generateUUID();
+
+        const filmeData = {
+            id: uuid,
+            name: nome,
+            rating: genero,
+            release_date: data,
+            description: descricao  // Adiciona a descrição no objeto
+        };
+
+        const apiUrl = 'http://localhost:8000/api/v1/movies';
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(filmeData)
+        };
+
+        fetch(apiUrl, options)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao enviar os dados. Status: ' + response.status);
+                }
+                console.log('Filme adicionado com sucesso!');
+                formularioFilme.reset();
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+    });
+});
+
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+</script>
+
+</body>
+</html>

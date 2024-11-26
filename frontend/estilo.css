@@ -1,0 +1,205 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden; /* para conter floats internos */
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+header h1 {
+    margin: 0;
+    float: left;
+}
+
+header a {
+    margin: 0;
+    float: left;
+    padding: 3px;
+}
+
+nav ul {
+    margin: 6px 0 0 0;
+    padding: 0;
+    list-style: none;
+    float: right;
+}
+
+nav ul li {
+    margin-left: 20px;
+    float: left;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+.botao {
+    background-color: #2196F3;
+    border: none;
+    color: #fff;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.5s ease;
+    height: 70px;
+}
+
+.botao:hover {
+    background-color: #4CAF50;
+}
+
+.home {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 200px); /* Calcula a altura mínima da seção para preencher a tela menos a altura do cabeçalho */
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    width: 200px;
+    display: inline-block;
+    vertical-align: top;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center; /* Centraliza o conteúdo dentro do card */
+    cursor: pointer;
+}
+
+.card img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    display: block; /* Impede que a imagem seja exibida como um elemento inline */
+    margin-left: auto; /* Centraliza a imagem horizontalmente */
+    margin-right: auto; /* Centraliza a imagem horizontalmente */
+    width: 170px;
+}
+
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 14px;
+    color: #666;
+}
+
+#containerCards {
+    position: absolute;
+    top: 0px; /* Ajuste conforme necessário */
+    left: 0px; /* Ajuste conforme necessário */
+}
+
+.card.botao {
+    background-color: #2196F3;
+    border: none;
+    color: #fff;
+    padding: 15px 20px; /* Ajuste o padding conforme necessário */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px; /* Adiciona margem ao redor do botão */
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: background-color 0.5s ease;
+}
+
+.container-formulario{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40vh;
+    margin-top: 50px;
+}
+
+.form-box{
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 8px;
+    width: 700px;
+}
+
+.form-box .title{
+    padding-left: 32px;
+    font-size: 24px;
+}
+
+.form-box form{
+    display: flex;
+    align-items: start;
+    flex-wrap: wrap;
+    padding: 32px;
+    flex-direction: column;
+}
+
+.form-box input,
+.form-box textarea{
+    width: calc(50% - 8px);
+    height: 48px;
+    border-radius: 8px;
+    border: thin solid #999;
+    padding-left: 16px;
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+.form-box input:first-child{
+    margin-right: 16px;
+}
+
+.form-box input[name=subject]{
+    width: 100%;
+}
+
+.form-box textarea{
+    width: 100%;
+    height: 180px;
+    padding: 16px;
+}
+
+.form-box button{
+    display: block;
+    border: none;
+    outline: none;
+    width: 180px;
+    height: 48px;
+    border-radius: 8px;
+    background-color: #6915b8;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.form-box button:hover{
+    background-color: #561296;
+}

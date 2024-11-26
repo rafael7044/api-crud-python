@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site de Filmes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden; /* para conter floats internos */
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            margin: 0;
+            float: left;
+            font-size: 28px;
+        }
+
+        header a {
+            margin: 0;
+            float: left;
+            padding: 3px;
+        }
+
+        nav ul {
+            margin: 6px 0 0 0;
+            padding: 0;
+            list-style: none;
+            float: right;
+        }
+
+        nav ul li {
+            float: left;
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .container-filme {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .movie-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .movie-year {
+            font-size: 20px;
+            color: #000;
+            margin-bottom: 10px;
+            padding: 2px 0;
+        }
+
+        .movie-synopsis {
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding: 3px 0;
+        }
+
+        .movie-rating {
+            font-size: 20px;
+            margin-bottom: 10px;
+            padding: 3px 0;
+        }
+
+        .button-container {
+            overflow: hidden;
+            margin-top: 35px;
+            /* Limpa o float para garantir que os botões estejam dentro do container-filme */
+        }
+
+        .watch-now-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            float: left;
+            margin-right: 10px;
+        }
+
+        .edit-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #ffc107;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            float: left;
+            margin-right: 10px;
+        }
+
+        .delete-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #dc3545;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            float: left;
+        }
+
+        .watch-now-button:hover {
+            background-color: #0056b3;
+        }
+
+        .edit-button:hover {
+            background-color: #ffa500; /* Amarelo forte */
+        }
+
+        .delete-button:hover {
+            background-color: #ff0000; /* Vermelho forte */
+        }
+
+        /* Estilo para o botão Voltar */
+        .btn-voltar {
+            position: absolute;
+            background-color: #2196F3;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px; /* Adiciona um espaço entre o botão e o link "Meu Site" */
+            margin-left: 200px;
+        }
+        .btn-voltar:hover {
+            background-color: #0b7dda;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" style="font-size: 2em; font-weight: bolder; color: #fff; text-decoration: none;">Meu Site</a>
+            <nav>
+                <ul>
+                    <li><a href="#">Página Inicial</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <button class="btn-voltar" onclick="window.history.back();">Voltar</button>
+    
+    <div class="container-filme" id="filme-details">
+        <!-- Aqui os detalhes do filme serão inseridos dinamicamente -->
+    </div>
+
+    
+<script>
+    // Função para buscar detalhes do filme com base no ID passado na URL
+function buscarDetalhesFilme() {
+    // Obtém o ID do filme da query string da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const filmeId = urlParams.get('id');
+
+    // URL da sua API para obter detalhes do filme específico
+    const apiUrl = `http://localhost:8000/api/v1/movies/${filmeId}`;
+
+    // Faz a requisição GET usando fetch
+    fetch(apiUrl)
+    .then(response => {
+        // Verifica se a resposta da requisição foi bem-sucedida
+        if (!response.ok) {
+            throw new Error('Erro ao carregar os detalhes do filme. Status: ' + response.status);
+        }
+        // Converte a resposta para JSON
+        return response.json();
+    })
+    .then(detalhesFilme => {
+        // Atualiza os elementos na página com os detalhes do filme
+        document.getElementById('filme-details').innerHTML = `
+            <h1 class="movie-title">${detalhesFilme.name}</h1>
+            <p class="movie-year">Ano: ${detalhesFilme.release_date}</p>
+            <p class="movie-synopsis">${detalhesFilme.description}</p>
+            <p class="movie-rating">Classificação indicativa: ${detalhesFilme.rating}</p>
+            <!-- Adicione mais detalhes do filme conforme necessário -->
+        `;
+
+        const buttonContainer = document.createElement('div');
+        buttonContainer.classList.add('button-container');
+        
+        const assistirAgoraButton = document.createElement('a');
+        assistirAgoraButton.href = '#';
+        assistirAgoraButton.classList.add('watch-now-button');
+        assistirAgoraButton.textContent = 'Assistir Agora';
+        
+        const editarButton = document.createElement('a');
+        editarButton.href = `editar_filme.html?id=${detalhesFilme.id}`; // Substitua <ID_do_filme> pelo ID real
+        editarButton.classList.add('edit-button');
+        editarButton.textContent = 'Editar';
+        
+        const excluirButton = document.createElement('a');
+        excluirButton.href = '#';
+        excluirButton.classList.add('delete-button');
+        excluirButton.textContent = 'Excluir';
+        excluirButton.dataset.id = detalhesFilme.id;
+        
+        buttonContainer.appendChild(assistirAgoraButton);
+        buttonContainer.appendChild(editarButton);
+        buttonContainer.appendChild(excluirButton);
+        
+        document.getElementById('filme-details').appendChild(buttonContainer);
+
+        // Adiciona event listener para o botão de exclusão após a criação dos botões
+        excluirButton.addEventListener('click', () => {
+            const id = excluirButton.dataset.id;
+
+            const url = `http://localhost:8000/api/v1/movies/${id}`;
+
+            const options = {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            };
+
+            fetch(url, options)
+                .then(response => {
+                    if (response.ok) {
+                        console.log(`Elemento com ID ${id} deletado com sucesso`);
+                        // Após a exclusão bem-sucedida, redireciona para a página anterior
+                        window.history.back();
+                        window.history.back();
+                    } else {
+                        console.error(`Erro ao deletar elemento com ID ${id}`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+        });
+    })
+    .catch(error => {
+        // Caso ocorra algum erro na requisição
+        console.error('Erro:', error);
+    });
+}
+
+// Chama a função para buscar os detalhes do filme ao carregar a página
+buscarDetalhesFilme();
+
+</script>
+</body>
+
+
+</html>
